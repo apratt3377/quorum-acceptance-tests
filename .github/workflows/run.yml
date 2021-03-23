@@ -130,6 +130,8 @@ jobs:
           # now we check if we should use the custom docker images in this repo
           gitref_path="${{ github.ref }}"
           gitref_path=${gitref_path/refs\/heads\//} # for refs/heads/my-branch
+          echo "HELLO"
+          echo $gitref_path
           if [[ $gitref_path == dev-* ]]; then
             echo "${{ github.token }}" | docker login https://docker.pkg.github.com -u ${{ github.repository_owner }} --password-stdin
             quorum_docker_image="docker.pkg.github.com/${{ github.repository }}/quorum-$gitref_path:latest"
