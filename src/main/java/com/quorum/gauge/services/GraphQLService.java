@@ -66,6 +66,7 @@ public class GraphQLService extends AbstractService {
     }
 
     private Single<Map<String, Object>> executeGraphQL(QuorumNode node, String query) {
+        logger.info("request " + query);
         return Single.create( subscriber -> {
             RequestBody body = RequestBody.create(
                 MediaType.parse("application/json"), query);

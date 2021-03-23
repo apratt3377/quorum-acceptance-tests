@@ -127,11 +127,11 @@ In this scenario, the assumption is that some of APIs in the batch are authorize
 * `"Client_1"` requests access token for scope(s) `"rpc://graphql_*"` and audience(s) `"Node1,Node2"` from the authorization server
 * `"Client_1"` is responded with "success" when trying to access graphql on `"Node1"`
 //* `"Client_1"` is responded with "invalid audience claim (aud)" when trying to access graphql on `"Node3"`
-* `"Operator_A"` requests access token for scope(s) `"rpc://admin_peers"` and audience(s) `"Node1,Node2"` from the authorization server
-* `"Operator_A"` is responded with "access denied" when trying to access graphql on `"Node1"`
-* `"Operator_A"` is responded with "success" when trying to:
-    | callApi       | targetNode |
-    |---------------|------------|
-    | `admin_peers` | `Node1`    |
-    | `admin_peers` | `Node2`    |
+//* `"Operator_A"` requests access token for scope(s) `"rpc://admin_peers"` and audience(s) `"Node1,Node2"` from the authorization server
+//* `"Operator_A"` is responded with "access denied" when trying to access graphql on `"Node1"`
+//* `"Operator_A"` is responded with "success" when trying to:
+//    | callApi       | targetNode |
+//    |---------------|------------|
+//    | `admin_peers` | `Node1`    |
+//    | `admin_peers` | `Node2`    |
 

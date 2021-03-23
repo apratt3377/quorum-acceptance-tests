@@ -62,6 +62,7 @@ public class PluginSecurity extends AbstractSpecImplementation {
     public void invokeMultiple(String clientId, String policy, Table table) {
         boolean expectAuthorized = "success".equalsIgnoreCase(policy);
         String token = mustHaveValue(DataStoreFactory.getScenarioDataStore(), clientId, String.class);
+        logger.info("invoke multiple token " + token);
         Context.storeAccessToken(token);
         Map<String, QuorumNetworkProperty.Node> nodeMap = networkProperty.getNodes();
         table.getTableRows().stream()
@@ -165,8 +166,9 @@ public class PluginSecurity extends AbstractSpecImplementation {
     @Step("`<clientId>` is responded with <policy> when trying to access graphql on `<targetNode>`")
     public void invokeGraphql(String clientId, String policy, QuorumNode targetNode) {
         boolean expectAuthorized = "success".equalsIgnoreCase(policy);
-        logger.info("check expectauth" + expectAuthorized);
+        logger.info("check expectauth " + expectAuthorized);
         String token = mustHaveValue(DataStoreFactory.getScenarioDataStore(), clientId, String.class);
+        logger.info("token " + token);
         Context.storeAccessToken(token);
         //String description = policy + ": getBlockNumber @" + targetNode.name();
         graphQLService.getBlockNumber(targetNode)
