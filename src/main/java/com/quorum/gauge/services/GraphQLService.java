@@ -67,18 +67,27 @@ public class GraphQLService extends AbstractService {
 
     private Single<Map<String, Object>> executeGraphQL(QuorumNode node, String query) {
         logger.info("request " + query);
+        logger.info("node " + node.name());
         return Single.create( subscriber -> {
             RequestBody body = RequestBody.create(
                 MediaType.parse("application/json"), query);
+            String nodeurl = graphqlUrl(node);
+            logger.info("nodeurl " + nodeurl);
             Request request = new Request.Builder()
-                .url(graphqlUrl(node))
+                .url(nodeurl)
                 .post(body)
                 .build();
             Call call = httpClient.newCall(request);
             try {
+                logger.info("before execute");
                 Response response = call.execute();
+                logger.info("response");
+                logger.info(response.toString());
                 InputStream responseBody = response.body().byteStream();
-                subscriber.onSuccess(new ObjectMapper().readValue(responseBody, Map.class));
+                logger.info("infostream");
+                Map res = new ObjectMapper().readValue(responseBody, Map.class);
+                logger.info("mapping");
+                subscriber.onSuccess(res);
             } catch (Exception e) {
                 logger.info("execute graphql error " + e.getMessage());
                 subscriber.onError(e);
