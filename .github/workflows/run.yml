@@ -96,6 +96,7 @@ jobs:
         tag:
           - 'basic-rpc-security || networks/plugins::raft-rpc-security'
           - 'basic-rpc-security || networks/plugins::istanbul-rpc-security'
+          - 'multitenancy && networks/plugins::raft-multitenancy'
         privacy-enhancements:
           - 'false'
         include:

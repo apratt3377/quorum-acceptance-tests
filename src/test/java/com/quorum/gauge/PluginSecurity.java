@@ -163,6 +163,11 @@ public class PluginSecurity extends AbstractSpecImplementation {
             });
     }
 
+    @Step("graphql <targetNode>")
+    public void testGraphql(QuorumNode targetNode) {
+        logger.info("blocknum " + graphQLService.getBlockNumber(targetNode).blockingGet().intValue());
+    }
+
     @Step("`<clientId>` is responded with <policy> when trying to access graphql on `<targetNode>`")
     public void invokeGraphql(String clientId, String policy, QuorumNode targetNode) {
         boolean expectAuthorized = "success".equalsIgnoreCase(policy);

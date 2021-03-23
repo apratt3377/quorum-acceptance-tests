@@ -121,11 +121,13 @@ In this scenario, the assumption is that some of APIs in the batch are authorize
 
  Tags: basic-rpc-security
 
-* Configure the authorization server to grant `"Client_1"` access to scopes `"rpc://graphql_*"` in `"Node1,Node2"`
-* Configure the authorization server to grant `"Operator_A"` access to scopes `"rpc://admin_peers"` in `"Node1,Node2"`
+ * graphql "Node1"
 
-* `"Client_1"` requests access token for scope(s) `"rpc://graphql_*"` and audience(s) `"Node1,Node2"` from the authorization server
-* `"Client_1"` is responded with "success" when trying to access graphql on `"Node1"`
+//* Configure the authorization server to grant `"Client_1"` access to scopes `"rpc://graphql_*"` in `"Node1,Node2"`
+//* Configure the authorization server to grant `"Operator_A"` access to scopes `"rpc://admin_peers"` in `"Node1,Node2"`
+//
+//* `"Client_1"` requests access token for scope(s) `"rpc://graphql_*"` and audience(s) `"Node1,Node2"` from the authorization server
+//* `"Client_1"` is responded with "success" when trying to access graphql on `"Node1"`
 //* `"Client_1"` is responded with "invalid audience claim (aud)" when trying to access graphql on `"Node3"`
 //* `"Operator_A"` requests access token for scope(s) `"rpc://admin_peers"` and audience(s) `"Node1,Node2"` from the authorization server
 //* `"Operator_A"` is responded with "access denied" when trying to access graphql on `"Node1"`
