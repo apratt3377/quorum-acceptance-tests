@@ -21,6 +21,7 @@ package com.quorum.gauge;
 
 import com.quorum.gauge.common.Context;
 import com.quorum.gauge.common.QuorumNetworkProperty;
+import com.quorum.gauge.common.QuorumNode;
 import com.quorum.gauge.core.AbstractSpecImplementation;
 import com.quorum.gauge.ext.BatchRequest;
 import com.quorum.gauge.ext.ObjectResponse;
@@ -159,6 +160,39 @@ public class PluginSecurity extends AbstractSpecImplementation {
             .blockingForEach(t -> {
                 DataStoreFactory.getScenarioDataStore().put(clientId, t);
             });
+    }
+
+    @Step("`<clientId>` is responded with <policy> when trying to access graphql on `<targetNode>`")
+    public void invokeGraphql(String clientId, String policy, QuorumNode targetNode) {
+        boolean expectAuthorized = "success".equalsIgnoreCase(policy);
+        logger.info("check expectauth" + expectAuthorized);
+        String token = mustHaveValue(DataStoreFactory.getScenarioDataStore(), clientId, String.class);
+        Context.storeAccessToken(token);
+        //String description = policy + ": getBlockNumber @" + targetNode.name();
+        graphQLService.getBlockNumber(targetNode)
+//            .doOnError(err -> {
+//                logger.info("graphql on error");
+//                logger.info("error msg" + err.getMessage());
+//                assertThat(expectAuthorized).isFalse();
+//                assertThat(err.getMessage())
+//                    .as(description).endsWith(policy);
+//                if (expectAuthorized) {
+//                    assertThat(Optional.ofNullable(err).orElse(new Throwable()).getMessage())
+//                        .as(description).isNullOrEmpty();
+//                }
+//            })
+//            .doOnSuccess(success -> {
+//                logger.info("graphql on success");
+//              assertThat(expectAuthorized).isTrue();
+//            })
+            .subscribe(
+                result -> {
+                    logger.info("success");
+                    assertThat(expectAuthorized).isTrue();},
+                e -> {
+                    logger.info("error" + e.getMessage());
+                    assertThat(expectAuthorized).isFalse();}
+            );
     }
 
     private String cleanData(String d) {

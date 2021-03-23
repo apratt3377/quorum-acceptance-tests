@@ -79,6 +79,7 @@ public class GraphQLService extends AbstractService {
                 InputStream responseBody = response.body().byteStream();
                 subscriber.onSuccess(new ObjectMapper().readValue(responseBody, Map.class));
             } catch (Exception e) {
+                logger.info("execute graphql error " + e.getMessage());
                 subscriber.onError(e);
             }
         });
